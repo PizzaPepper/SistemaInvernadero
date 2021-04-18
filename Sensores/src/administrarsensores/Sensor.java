@@ -5,21 +5,24 @@
  */
 package administrarsensores;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  *
  * @author Eliu
  */
-public class Sensor {
+public class Sensor implements Serializable{
     private String Nombre;
     private String Compania;
-    private float Dato;
+    private float Humedad;
+    private float Temperatura;
 
     public Sensor(String Nombre, String Compania) {
         this.Nombre = Nombre;
         this.Compania = Compania;
-        this.Dato = 0;
+        this.Humedad=0;
+        this.Temperatura=0;
     }
     
     public String getNombre() {
@@ -38,12 +41,20 @@ public class Sensor {
         this.Compania = Compania;
     }
 
-    public float getDato() {
-        return Dato;
+    public float getHumedad() {
+        return Humedad;
     }
 
-    public void setDato(float dato) {
-        this.Dato = dato;
+    public void setHumedad(float Humedad) {
+        this.Humedad = Humedad;
+    }
+
+    public float getTemperatura() {
+        return Temperatura;
+    }
+
+    public void setTemperatura(float Temperatura) {
+        this.Temperatura = Temperatura;
     }
 
     @Override
@@ -77,7 +88,7 @@ public class Sensor {
 
     @Override
     public String toString() {
-        return "Nombre: " + Nombre + " Compania: " + Compania + " dato=" + Dato;
+        return "Nombre: " + Nombre + " Compania: " + Compania + " Humdedad: "+Humedad+" Temperatura: "+Temperatura;
     }
     
     
