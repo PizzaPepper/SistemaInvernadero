@@ -5,7 +5,7 @@
  */
 package Socket;
 
-import administrarsensores.Sensor;
+import Dominio.Sensor;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
