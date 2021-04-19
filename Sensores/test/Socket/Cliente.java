@@ -5,13 +5,15 @@
  */
 package Socket;
 
+import administrarsensores.Sensor;
+import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.net.Socket;
-import java.nio.ByteBuffer;
+import java.util.ArrayList;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 /**
  *
@@ -24,28 +26,48 @@ public class Cliente {
     public static final float MIN=0f;
     public static final float MAX=100f;
     
-    public static void main(String[] args) throws IOException {
+    public static ArrayList<Sensor> sensores;
+    
+    public static void main(String[] args) throws IOException, InterruptedException {
+        
+        inicializarLista();
+        
+        while(true){
+            loop();
+            
+            TimeUnit.SECONDS.sleep(1);
+            
+        }
+        
+        
+    }
+    
+    public static void loop() throws IOException{
         //Init
+        int randomIndex= new Random().nextInt(2);
         Socket sensor = null;
-        OutputStream output = null;
         ObjectOutputStream oos= null;
         float Tem= MIN + new Random().nextFloat() * (MAX-MIN);
-        //float Hum= MIN + new Random().nextFloat() * (MAX-MIN);
-        
+        float Hum= MIN + new Random().nextFloat() * (MAX-MIN);
+        //Conf Sensor
+        Sensor s=sensores.get(randomIndex);
+        s.setTemperatura(Tem);
+        s.setHumedad(Hum);
         //Config
         sensor = new Socket(HOST, PORT);
-        output = sensor.getOutputStream();
-        oos = new ObjectOutputStream(output);
-        
+        oos = new ObjectOutputStream(new BufferedOutputStream(sensor.getOutputStream()));
         //Send
-        oos.writeFloat(Tem);
+        oos.writeObject(s);
         
         //Close Connections
-        sensor.close();
-        output.close();
+        //sensor.close();
+        //output.close();
         oos.close();
-        
-        
-        
+    }
+    
+    public static void inicializarLista(){
+        sensores=new ArrayList<>();
+        sensores.add(new Sensor("Sensor Generico 1", "Compañia x"));
+        sensores.add(new Sensor("Sensor Generico 2", "Compañia y"));
     }
 }
