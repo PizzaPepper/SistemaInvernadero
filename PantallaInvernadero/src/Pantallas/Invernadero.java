@@ -61,9 +61,9 @@ public class Invernadero extends javax.swing.JFrame {
         jlistSensores.setModel(new DefaultListModel<Sensor>());
         jScrollPane1.setViewportView(jlistSensores);
 
-        btnAgregar.setBackground(new java.awt.Color(102, 153, 255));
+        btnAgregar.setBackground(new java.awt.Color(153, 0, 0));
         btnAgregar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        btnAgregar.setText("+");
+        btnAgregar.setText("Detectar");
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAgregarActionPerformed(evt);
