@@ -12,7 +12,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
-public class Server {
+public class Server implements Runnable{
     private final int PORT;
     private ServerSocket server;
     private ArrayList<Sensor> sensores;
@@ -23,7 +23,18 @@ public class Server {
         this.sensores = sensores;
     }
     
-    public void conn(){
+    
+    private static void CambiarValoresSensor(ArrayList<Sensor> sensores,Sensor sensorI){
+        for (Sensor sensor : sensores) {
+            if(sensor.getNombre().equals(sensorI.getNombre())){
+            sensor.setHumedad(sensorI.getHumedad());
+            sensor.setTemperatura(sensorI.getTemperatura());
+            }    
+        }
+    }
+
+    @Override
+    public void run() {
         Socket cliente=null;
         ObjectInputStream dis=null;
         
@@ -44,18 +55,6 @@ public class Server {
             //System.out.flush();
             //System.out.println(sensores);
             
-        }
-        
-    }
-        
-    
-    private static void CambiarValoresSensor(ArrayList<Sensor> sensores,Sensor sensorI){
-        for (Sensor sensor : sensores) {
-            if(sensor.getNombre().equals(sensorI.getNombre())){
-            sensor.setHumedad(sensorI.getHumedad());
-            sensor.setTemperatura(sensorI.getTemperatura());
-            }    
-        }
-    }
+        }}
     
 }

@@ -88,7 +88,7 @@ public class Sensor implements Serializable{
 
     @Override
     public String toString() {
-        return "Nombre: " + Nombre + " Compania: " + Compania + " Humdedad: "+Humedad+" Temperatura: "+Temperatura+"\n";
+        return "Nombre: "+ Nombre + " Humedad: "+Humedad+" Temperatura: "+Temperatura+"\n";
     }
     
     

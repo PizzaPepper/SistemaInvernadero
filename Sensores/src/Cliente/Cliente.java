@@ -12,8 +12,11 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public class Cliente {
+public class Cliente implements Runnable {
 
     private final String HOST;
     private final int PORT;
@@ -52,6 +55,19 @@ public class Cliente {
             e.printStackTrace();
         }
 
+    }
+
+    @Override
+    public void run() {
+        while (true) {
+            try {
+                EnviarDatos();
+                // Configurar el tiempo
+                TimeUnit.MILLISECONDS.sleep(300);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
 }
