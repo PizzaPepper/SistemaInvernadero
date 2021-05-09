@@ -6,25 +6,71 @@
 package Dominio;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Objects;
 
 /**
  *
  * @author Eliu
  */
-public class Sensor implements Serializable{
+public class Sensor implements Serializable {
+
+    private int id;
     private String Nombre;
     private String Compania;
     private float Humedad;
     private float Temperatura;
+    private Calendar Fecha;
+
+    public Sensor() {
+    }
+    
+    public Sensor(int id, String Nombre, String Compania) {
+        this.id = id;
+        this.Nombre = Nombre;
+        this.Compania = Compania;
+        this.Humedad = 0;
+        this.Temperatura = 0;
+        this.Fecha = new GregorianCalendar();
+    }
+
+    public Sensor(int id, String Nombre, String Compania, float Humedad, float Temperatura, Calendar Fecha) {
+        this.id = id;
+        this.Nombre = Nombre;
+        this.Compania = Compania;
+        this.Humedad = Humedad;
+        this.Temperatura = Temperatura;
+        this.Fecha = Fecha;
+    }
+    
+    public Sensor(int id, String Nombre, String Compania, float Humedad, float Temperatura) {
+        this.id = id;
+        this.Nombre = Nombre;
+        this.Compania = Compania;
+        this.Humedad = Humedad;
+        this.Temperatura = Temperatura;
+        this.Fecha = new GregorianCalendar();
+    }
 
     public Sensor(String Nombre, String Compania) {
         this.Nombre = Nombre;
         this.Compania = Compania;
-        this.Humedad=0;
-        this.Temperatura=0;
+        this.Humedad = 0;
+        this.Temperatura = 0;
+        this.Fecha = new GregorianCalendar();
     }
-    
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getNombre() {
         return Nombre;
     }
@@ -57,6 +103,14 @@ public class Sensor implements Serializable{
         this.Temperatura = Temperatura;
     }
 
+    public Calendar getFecha() {
+        return Fecha;
+    }
+
+    public void setFecha(Calendar Fecha) {
+        this.Fecha = Fecha;
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
@@ -85,13 +139,16 @@ public class Sensor implements Serializable{
         }
         return true;
     }
-
-    @Override
-    public String toString() {
-        return "Nombre: "+ Nombre + " Humedad: "+Humedad+" Temperatura: "+Temperatura+"\n";
+    
+    public String myTime(){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String date = sdf.format(Fecha.getTime());
+        return date;
     }
     
-    
-    
-    
+    @Override
+    public String toString() {
+        return "Nombre: " + Nombre + " Humedad: " + Humedad + " Temperatura: " + Temperatura + " Fecha "+ myTime() + "\n";
+    }
+
 }

@@ -8,7 +8,7 @@ package administrarsensores;
 import Dominio.Sensor;
 import java.util.ArrayList;
 
-public interface InterfazSensorDAO {
+public interface ISensor {
     public ArrayList<Sensor> listar();
     public Sensor getId(int id);
     public void Agregar(Sensor s);
