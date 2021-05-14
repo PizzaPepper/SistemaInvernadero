@@ -7,9 +7,6 @@ package Rest;
 
 import Dominio.Sensor;
 import administrarsensores.SensorRest;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Calendar;
 import org.json.JSONException;
 

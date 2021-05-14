@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package invernadero;
+package Pantallas;
 
 import java.awt.Color;
 import java.awt.Image;
-import java.awt.Label;
+import java.util.ArrayList;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -18,11 +18,12 @@ import javax.swing.JLabel;
  */
 public class Menu extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Menu
-     */
+    public static ArrayList<Dominio.Sensor> sensores = new ArrayList<>();
+    public static ArrayList<Dominio.Alarma> alarmas = new ArrayList<>();
+    
     public Menu() {
         initComponents();
+        this.setLocationRelativeTo(null);
         this.getContentPane().setBackground(Color.ORANGE);
         escalar(imgRegistrar,"/sources/registrar.png");
         escalar(imgGrafica,"/sources/grafica.png");
@@ -50,8 +51,18 @@ public class Menu extends javax.swing.JFrame {
         setBackground(new java.awt.Color(255, 153, 51));
 
         btnRegistrar.setText("Registrar Sensor");
+        btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarActionPerformed(evt);
+            }
+        });
 
         btnMostrar.setText("Mostrar Sensor");
+        btnMostrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMostrarActionPerformed(evt);
+            }
+        });
 
         btnReporte.setText("Reporte de Gráficos");
 
@@ -100,6 +111,17 @@ public class Menu extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
+        new AgregarSensor().setVisible(true);
+    }//GEN-LAST:event_btnRegistrarActionPerformed
+
+    private void btnMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostrarActionPerformed
+        MostrarSensores.sensores.addAll(sensores);
+        MostrarSensores.alarmas.addAll(alarmas);
+        
+        new MostrarSensores().setVisible(true);
+    }//GEN-LAST:event_btnMostrarActionPerformed
 
     /**
      * @param args the command line arguments

@@ -22,12 +22,55 @@ public class Cliente implements Runnable {
     private final int PORT;
     private final float MIN = 0f;
     private final float MAX = 100f;
-    private ArrayList<Sensor> sensores;
+    private static ArrayList<Sensor> sensores;
+
+    
 
     public Cliente(String HOST, int PORT, ArrayList<Sensor> sensores) {
         this.HOST = HOST;
         this.PORT = PORT;
         this.sensores = sensores;
+    }
+
+    public Cliente(String HOST, int PORT) {
+        this.HOST = HOST;
+        this.PORT = PORT;
+        this.sensores = new ArrayList<>();
+        InicializarSensores();
+    }
+    
+    
+    public void InicializarSensores() {
+        sensores.add(new Sensor("S1", "Compania A"));
+        sensores.add(new Sensor("S2", "Compania B"));
+        sensores.add(new Sensor("S3", "Compania C"));
+        sensores.add(new Sensor("S4", "Compania X"));
+        sensores.add(new Sensor("S5", "Compania Y"));
+    }
+    
+    public void EnviarListaDatos() {
+        for (Sensor sensor : sensores) {
+            float Tem = MIN + new Random().nextFloat() * (MAX - MIN);
+            float Hum = MIN + new Random().nextFloat() * (MAX - MIN);
+            sensor.setTemperatura(Tem);
+            sensor.setHumedad(Hum);
+        }
+        
+        Socket sensor = null;
+        ObjectOutputStream oos = null;
+        
+        try {
+            //Config
+            sensor = new Socket(HOST, PORT);
+            oos = new ObjectOutputStream(new BufferedOutputStream(sensor.getOutputStream()));
+            //Send
+            oos.writeObject(sensores);
+            //Close Connections
+            oos.close();
+            sensor.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void EnviarDatos() {
@@ -46,11 +89,9 @@ public class Cliente implements Runnable {
             oos = new ObjectOutputStream(new BufferedOutputStream(sensor.getOutputStream()));
             //Send
             oos.writeObject(s);
-
             //Close Connections
-            //sensor.close();
-            //output.close();
             oos.close();
+            sensor.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -63,11 +104,12 @@ public class Cliente implements Runnable {
             try {
                 EnviarDatos();
                 // Configurar el tiempo
-                TimeUnit.MILLISECONDS.sleep(300);
+                TimeUnit.MILLISECONDS.sleep(250);
             } catch (InterruptedException ex) {
                 Logger.getLogger(Cliente.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
-
+    
+    
 }

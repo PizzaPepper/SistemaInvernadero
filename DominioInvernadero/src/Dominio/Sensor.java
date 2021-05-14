@@ -6,16 +6,13 @@
 package Dominio;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Objects;
 
-/**
- *
- * @author Eliu
- */
 public class Sensor implements Serializable {
 
     private int id;
@@ -52,7 +49,7 @@ public class Sensor implements Serializable {
         this.Compania = Compania;
         this.Humedad = Humedad;
         this.Temperatura = Temperatura;
-        this.Fecha = new GregorianCalendar();
+        this.Fecha = Calendar.getInstance();
     }
 
     public Sensor(String Nombre, String Compania) {
@@ -60,7 +57,7 @@ public class Sensor implements Serializable {
         this.Compania = Compania;
         this.Humedad = 0;
         this.Temperatura = 0;
-        this.Fecha = new GregorianCalendar();
+        this.Fecha = Calendar.getInstance();
     }
 
     public int getId() {
@@ -148,7 +145,9 @@ public class Sensor implements Serializable {
     
     @Override
     public String toString() {
-        return "Nombre: " + Nombre + " Humedad: " + Humedad + " Temperatura: " + Temperatura + " Fecha "+ myTime() + "\n";
+        DecimalFormat format=new DecimalFormat();
+        format.setMaximumFractionDigits(2);
+        return "Nombre: " + Nombre + " Humedad: " + format.format(Humedad) + " Temperatura: " + format.format(Temperatura) + /*" Fecha "+ myTime() +*/ "\n";
     }
 
 }

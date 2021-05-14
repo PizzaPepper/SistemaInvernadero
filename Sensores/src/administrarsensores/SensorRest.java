@@ -87,6 +87,7 @@ public class SensorRest implements ISensor {
     
     @Override
     public void Agregar(Sensor s) {
+        System.out.println(s);
         rest = new RequestSensor();
         rest.addSensor(s);
         rest.close();

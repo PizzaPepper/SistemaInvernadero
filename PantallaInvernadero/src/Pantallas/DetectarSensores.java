@@ -3,7 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package invernadero;
+package Pantallas;
+
+import Cliente.Cliente;
+import Dominio.Sensor;
+import Server.Server;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
+import javax.swing.DefaultListModel;
 
 /**
  *
@@ -11,11 +19,12 @@ package invernadero;
  */
 public class DetectarSensores extends javax.swing.JFrame {
 
-    /**
-     * Creates new form DetectarSensores
-     */
+    public static ArrayList<Sensor> sensoresSim = new ArrayList<>();
+
     public DetectarSensores() {
         initComponents();
+        this.setLocationRelativeTo(null);
+        iniciarLista();
     }
 
     /**
@@ -35,49 +44,62 @@ public class DetectarSensores extends javax.swing.JFrame {
         listProvisional = new javax.swing.JList<>();
         btnAgrregar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Detectar Sensores");
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("Sensores detectados");
 
-        listDetectados.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
+        listDetectados.setModel(new DefaultListModel<>()
+        );
+        listDetectados.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                listDetectadosMouseClicked(evt);
+            }
         });
         jScrollPane1.setViewportView(listDetectados);
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel2.setText("Lista Provisional");
 
-        listProvisional.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
+        listProvisional.setModel(new DefaultListModel<>()
+        );
+        listProvisional.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                listProvisionalMouseClicked(evt);
+            }
         });
         jScrollPane2.setViewportView(listProvisional);
 
+        btnAgrregar.setBackground(new java.awt.Color(153, 255, 153));
+        btnAgrregar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnAgrregar.setText("Agregar a Lista");
+        btnAgrregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgrregarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(55, 55, 55)
-                        .addComponent(jLabel1)
-                        .addGap(103, 103, 103)
-                        .addComponent(jLabel2))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(47, 47, 47)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(51, 51, 51)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 10, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(46, 46, 46)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addGap(69, 69, 69))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnAgrregar, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(43, 43, 43))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnAgrregar)
+                .addGap(52, 52, 52))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -92,46 +114,78 @@ public class DetectarSensores extends javax.swing.JFrame {
                     .addComponent(jScrollPane2))
                 .addGap(18, 18, 18)
                 .addComponent(btnAgrregar, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
+    private void listDetectadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listDetectadosMouseClicked
+        DefaultListModel<Sensor> model = (DefaultListModel<Sensor>) listDetectados.getModel();
+        DefaultListModel<Sensor> modelP = (DefaultListModel<Sensor>) listProvisional.getModel();
+        Sensor s = listDetectados.getSelectedValue();
+        model.removeElement(s);
+        modelP.addElement(s);
+    }//GEN-LAST:event_listDetectadosMouseClicked
+
+    private void listProvisionalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listProvisionalMouseClicked
+        DefaultListModel<Sensor> model = (DefaultListModel<Sensor>) listDetectados.getModel();
+        DefaultListModel<Sensor> modelP = (DefaultListModel<Sensor>) listProvisional.getModel();
+        Sensor s = listDetectados.getSelectedValue();
+        modelP.removeElement(s);
+        model.addElement(s);
+    }//GEN-LAST:event_listProvisionalMouseClicked
+
+    private void btnAgrregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgrregarActionPerformed
+        ArrayList<Sensor> s = new ArrayList<>();
+        DefaultListModel<Sensor> modelP = (DefaultListModel<Sensor>) listProvisional.getModel();
+
+        for (int i = 0; i < modelP.getSize(); i++) {
+            s.add(modelP.get(i));
+        }
+        MostrarSensores.sensores.addAll(s);
+        if (!MostrarSensores.sensores.isEmpty()) {
+            MostrarSensores.simularSensores(MostrarSensores.sensores);
+            MostrarSensores.enviarDatosRest();
+        }
+        
+        sensoresSim.removeAll(s);
+        this.dispose();
+    }//GEN-LAST:event_btnAgrregarActionPerformed
+
+    private void getSensores() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    sensoresSim.addAll(new Server(3312, sensoresSim).RecibirListaDatos());
+                } catch (IOException ex) {
+                    ex.printStackTrace();
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DetectarSensores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DetectarSensores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DetectarSensores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DetectarSensores.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }).start();
+        try {
+            TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e) {
         }
-        //</editor-fold>
+        new Cliente("localhost", 3312).EnviarListaDatos();
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new DetectarSensores().setVisible(true);
-            }
-        });
+        try {
+            TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e) {
+        }
     }
+
+    private void iniciarLista() {
+        getSensores();
+        DefaultListModel<Sensor> model = (DefaultListModel<Sensor>) listDetectados.getModel();
+        if (model.isEmpty()) {
+            for (Sensor sensor : sensoresSim) {
+                model.addElement(sensor);
+            }
+        }
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgrregar;
@@ -139,7 +193,7 @@ public class DetectarSensores extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JList<String> listDetectados;
-    private javax.swing.JList<String> listProvisional;
+    private javax.swing.JList<Sensor> listDetectados;
+    private javax.swing.JList<Sensor> listProvisional;
     // End of variables declaration//GEN-END:variables
 }
