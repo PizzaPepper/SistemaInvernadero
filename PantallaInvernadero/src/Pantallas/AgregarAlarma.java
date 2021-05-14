@@ -163,7 +163,10 @@ public class AgregarAlarma extends javax.swing.JFrame {
 
     public void cargarLista() {
         DefaultComboBoxModel<Sensor> sensoresCB = (DefaultComboBoxModel<Sensor>) boxSensores.getModel();
-        sensoresCB.addAll(sensoresAlarma);
+        for (Sensor sensor : sensoresAlarma) {
+            sensoresCB.addElement(sensor);
+        }
+        //sensoresCB.addAll(sensoresAlarma);
         boxSensores.setSelectedIndex(0);
     }
 
