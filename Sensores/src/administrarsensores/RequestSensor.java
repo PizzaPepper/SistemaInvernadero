@@ -5,15 +5,10 @@
  */
 package administrarsensores;
 
-import Dominio.Sensor;
-import com.google.gson.Gson;
 import javax.ws.rs.ClientErrorException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import org.json.JSONObject;
-import org.json.JSONWriter;
 
 /**
  * Jersey REST client generated for REST resource:SensorResource [Sensor]<br>
